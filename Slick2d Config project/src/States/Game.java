@@ -1,5 +1,3 @@
-//Edited on laptop
-
 package States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;

@@ -10,8 +10,8 @@ public class Menu extends BasicGameState{
 	Image exitGame = null;
 	Image hButton = null;
 	
-	boolean playNowHighlighted = false;
-	boolean exitGameHighlighted = false;
+	Boolean playNowHighlighted = false;
+	Boolean exitGameHighlighted = false;
 	
 	public Menu(int State){
 		

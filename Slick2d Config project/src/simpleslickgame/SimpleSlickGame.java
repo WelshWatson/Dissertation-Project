@@ -26,13 +26,13 @@ public class SimpleSlickGame extends BasicGame
 	
 	int lazerNum = 0;
 	
-	boolean showLazer0 = false;
-	boolean showLazer1 = false;
-	boolean showLazer2 = false;
-	boolean showLazer3 = false;
-	boolean showLazer4 = false;
-	boolean showLazer5 = false;
-	boolean showLazer6 = false;
+	Boolean showLazer0 = false;
+	Boolean showLazer1 = false;
+	Boolean showLazer2 = false;
+	Boolean showLazer3 = false;
+	Boolean showLazer4 = false;
+	Boolean showLazer5 = false;
+	Boolean showLazer6 = false;
 	
 	float shipX = 600;
 	float shipY = 600;
@@ -56,9 +56,9 @@ public class SimpleSlickGame extends BasicGame
 	float NME1_X = 25;
 	float NME1_Y = 0;
 	
-	boolean XRight = true;
-	boolean YDown = true;
-	boolean fire = false;
+	Boolean XRight = true;
+	Boolean YDown = true;
+	Boolean fire = false;
 	
 	public SimpleSlickGame(String gamename)
 	{
