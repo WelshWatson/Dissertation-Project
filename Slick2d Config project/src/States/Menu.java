@@ -26,7 +26,7 @@ public class Menu extends BasicGameState{
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
-		g.drawString("Welcome to Buckyland!", 100, 50);		
+		g.drawString("Welcome to the Game!", 100, 50);		
 		if(playNowHighlighted == true){
 			hButton.draw(100, 100);
 		}
@@ -38,10 +38,11 @@ public class Menu extends BasicGameState{
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		
 		int posX = Mouse.getX();
-		int posY = Mouse.getY();
+		int posY = Math.abs(gc.getHeight() - Mouse.getY());
 		//Mouse button over PlayNow
-		if((posX > 100 && posX < 311) && ((posY > 209 && posY < 260))){
+		if((posX > 100 && posX < 311) && ((posY > 100 && posY < 151))){
 			playNowHighlighted = true;
 			if(Mouse.isButtonDown(0)){
 				sbg.enterState(1);
@@ -50,7 +51,7 @@ public class Menu extends BasicGameState{
 			playNowHighlighted = false;
 		}
 		//Mouse button over Exit Game
-		if((posX > 100 && posX < 311) && ((posY > 109 && posY < 160))){
+		if((posX > 100 && posX < 311) && ((posY > 200 && posY < 251))){
 			exitGameHighlighted = true;
 			if(Mouse.isButtonDown(0)){
 				System.exit(0);
