@@ -1,28 +1,17 @@
 package Villains;
 
-import States.Heroes;
-
 public abstract class Mobs {
 
+	public int atk;
+	int def;
+	int hp;
+	int posX;
+	int posY;
 	
-	public Mobs(){
-		
+	public abstract int attack();
+	public abstract int defense();
+	public abstract int hp();
+	public abstract int coordX();
+	public abstract int coordY();
 
-		String name;
-		int atk;
-		int def;
-		int hp;
-	}
-	
-	public int getAtk(){
-		return 0;
-	}
-
-	public int getDef() {
-		return 0;
-	}
-	
-	public int getHp(){
-		return 0;
-	}
 }

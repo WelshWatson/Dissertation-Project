@@ -1,34 +1,38 @@
 package Villains;
 
+import States.RandomNumberGenerator;
+
 public class Wolf extends Mobs{
-
+	
+	RandomNumberGenerator r = new RandomNumberGenerator();
+	
+		public Wolf(){
 		
-		private String name;
-		private int atk = 1;
-		private int def = 3;
-		private int hp = 20;
-
+		atk = 1;
+		def = 3;
+		hp = 20;
 		
-		public Wolf(String n){
-
-			name = n;
-			String type = "Wolf";
-
 		}
 		
-		public int getAtk(){
-			int atk = this.atk;
+		public int attack(){
 			return atk;
 		}
 
-
-		public int getDef() {
-			int def = this.def;
+		public int defense() {
 			return def;
 		}
 		
-		public int getHp(){
-			int hp = this.hp;
+		public int hp(){
 			return hp;
+		}
+		
+		public int coordX(){
+			int x = r.getX();
+			return x;
+		}
+		
+		public int coordY(){
+			int y = r.getY();
+			return y;
 		}
 }
