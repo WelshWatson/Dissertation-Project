@@ -4,19 +4,19 @@ import java.util.Random;
 
 public class RandomNumberGenerator {
 
-	public int getX(){
+	public float getX(){
 		
 		Random r = new Random();
-		int a = r.nextInt(750) + 250;
+		float a = r.nextInt(750) + 250;
 		
 		return a;
 		
 	}
 	
-	public int getY(){
+	public float getY(){
 		
 		Random r = new Random();
-		int a = r.nextInt(700);
+		float a = r.nextInt(500) + 100;
 		
 		return a;
 	}

@@ -1,12 +1,6 @@
 package States;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
-
-import Villains.Mobs;
-import Villains.Wolf;
 
 public class Game extends StateBasedGame{
 

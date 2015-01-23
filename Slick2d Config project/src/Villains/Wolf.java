@@ -11,6 +11,8 @@ public class Wolf extends Mobs{
 		atk = 1;
 		def = 3;
 		hp = 20;
+		posX = r.getX();
+		posY = r.getY();
 		
 		}
 		
@@ -26,13 +28,24 @@ public class Wolf extends Mobs{
 			return hp;
 		}
 		
-		public int coordX(){
-			int x = r.getX();
+		public float coordX(){
+			float x = posX;
 			return x;
 		}
 		
-		public int coordY(){
-			int y = r.getY();
+		public float coordY(){
+			float y = posY;
 			return y;
+		}
+		
+		public float[] createMob(){
+    		float[] enemy = new float[6];
+			enemy[0] = attack();
+			enemy[1] = defense();
+			enemy[2] = hp();
+			enemy[4] = coordX();
+			enemy[5] = coordY();
+			return enemy;
+			
 		}
 }

@@ -1,7 +1,8 @@
 package States;
 
-import java.util.Random;
+import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Timer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,20 +11,26 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import Villains.Mobs;
 import Villains.Wolf;
+import Heroes.Allies;
 import Heroes.Wizard;
 
 public class Play extends BasicGameState {	
+
+	int mouseX = 230;
+	int mouseY = 270;
+	boolean setMovement = false;
+	
+	int wolvesCreated = 0;
+	int heroesCreated = 0;
+	ArrayList<Wolf> etd = new ArrayList<Wolf>();
+	ArrayList<Wizard> wiz = new ArrayList<Wizard>();
 	
 	Timer t = new Timer();
 	float st = t.getTime();
-
-	Mobs wolf = new Wolf(); 
-	
 	long startTime = System.currentTimeMillis() / 1000;
 	
-	Heroes Steve = new Wizard("Steve");
+	Allies Steve = new Wizard();
 
 
 	Image gt = null;
@@ -38,19 +45,15 @@ public class Play extends BasicGameState {
 	Image Enemy1 = null;
 	Image UI = null;
 	
-	boolean Hero1Visible = false;
 	boolean Enemy1Alive = true;
 	boolean hero1Xrange = false;
 	boolean hero1Yrange = false;
-	boolean spawnEnemy = false;
 	
-	int hero1posX = 200;
-	int hero1posY = 240;
-	float enemy1posX = 550;
-	float enemy1posY = 550;
-	
-	int wolvesCreated = 0;
-	
+	int heroX = 200;
+	int heroY = 240;
+	float enemy1posX;
+	float enemy1posY;
+
 	int tileWidth = 64;
 	int tileHeight = 64;
 		
@@ -83,22 +86,12 @@ public class Play extends BasicGameState {
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 					 };
-	
-	
-
-
-	    	
 	    	//int[][][][][] enemy = new int[Stan.attack()][Stan.defense()][Stan.hp()][Stan.coordX()][Stan.coordY()];
 
-	
 	public Play(int State){
-
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
-		
-
-		
 		
 		Tile grassTile = new GrassTile();
 		Tile dirtTile = new DirtTile();
@@ -114,14 +107,15 @@ public class Play extends BasicGameState {
 		Enemy1 = new Image("res/Enemy1.png");
 		UI = new Image("res/UI.png");
 		
+
+
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
-
-		long currentTime = System.currentTimeMillis() / 1000;
 		
 		//Sleep timer to slow FPS to 60
-			try {
+		
+		try {
 				Thread.sleep(14);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -160,80 +154,99 @@ public class Play extends BasicGameState {
 			}
 		}
 		
-		
 		Castle.draw(25, 90, tileWidth * 4, tileHeight * 3);
-		
-		if(currentTime > startTime + 5){
-			Hero1Visible = true;
-		Hero1.draw(hero1posX, hero1posY, tileWidth, tileHeight);
-		}
-		g.drawString(hero1posX + " - " + hero1posY, 400, 50);
 
-		Enemy1.draw(wolf.coordX(), wolf.coordY(), tileWidth, tileHeight);
-		
-		g.drawString(enemy1posX + " - " + enemy1posY, 600, 50);
 
-		
-		UI.draw(0, 0, 1024, 768);
-	}
-	
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		
-
-		
 		Timer.tick();
 		float elapsed = t.getTime() - st;
 		if(elapsed % 5 >= 0 && elapsed % 5 < 1){
 
-			
-
-	    	int[] enemy = new int[6];
-	    	{
-	    			enemy[0] = wolf.attack();
-	    			enemy[1] = wolf.defense();
-	    			enemy[2] = wolf.hp();
-	    			enemy[4] = wolf.coordX();
-	    			enemy[5] = wolf.coordY();
-	    	};
-			
+	    		Wolf wolf = new Wolf();
+	    		etd.add(wolf);
+	    		wolvesCreated++;
 			st--;
 		}
+		if(wolvesCreated > 0){
+			for(int i = 0; i < etd.size(); i++){
+				Enemy1.draw(etd.get(i).posX, etd.get(i).posY, tileWidth, tileHeight);
+		}
+		}
 		
-			//Move enemy 1
+		g.drawString(enemy1posX + " - " + enemy1posY, 600, 50);
+		Hero1.draw(heroX, heroY, tileWidth, tileHeight);
 		
 		
-		if(elapsed % 2 >= 0 && elapsed % 2 < 1){
+		if(elapsed % 5 >= 0 && elapsed % 5 < 1 && heroesCreated < 12){
+    		Wizard wizard = new Wizard();
+    		wiz.add(wizard);
+    		heroesCreated++;
+    		st--;
+		}
+		
+		if(heroesCreated > 0){
+			for(int i = 0; i < wiz.size(); i++){
+				Hero1.draw(wiz.get(i).posX, wiz.get(i).posY,tileWidth -20, tileHeight - 20);
+				System.out.println(wiz.size());
+		}	
+		}
+		UI.draw(0, 0, 1024, 768);
+	}
+	
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
 
-			if(enemy1posX < 974 && enemy1posX > 0 && enemy1posY > 0 && enemy1posY < 720 && Enemy1Alive == true && hero1Yrange != true && hero1Xrange != true){
-				enemy1posX += 0.5;
+		for(int i = 0; i < wiz.size(); i++){
+
+			if(wiz.get(i).posX < (heroX - 20) - (i * 10)){
+			wiz.get(i).posX++;
+			}if(wiz.get(i).posX > (heroX + 20) + (i * 10)){
+			wiz.get(i).posX--;
+			}	
+			
+			if(wiz.get(i).posY < (heroY - 30) - (i * 10)){
+				wiz.get(i).posY++;
+			}if(wiz.get(i).posY > (heroY + 50) + (i * 10)){
+			wiz.get(i).posY--;
+				}
+		}
+		
+		float elapsed = t.getTime() - st;
+			
+		//Move enemy
+		if(elapsed % 2 >= 0 && elapsed % 2 < 1){
+			for(int i = 0; i < etd.size(); i++){
+			if(etd.get(i).posX < 974 && etd.get(i).posX > 20 && etd.get(i).posY > 100 && etd.get(i).posY < 600
+					&& hero1Yrange != true && hero1Xrange != true){
+					//Move
+									}
 				}
 		}
 
+		//Move hero
 		
-		//Move hero to enemy
-		if(Hero1Visible == true){
-			if(hero1posX < enemy1posX - 50){
-			hero1posX += 1;
-			}else if(hero1posX > enemy1posX + 50){
-				hero1posX -=1;
-			}else{
-				hero1Xrange = true;
+
+		if(elapsed > 2){
+			if(Mouse.isButtonDown(0)){
+				setMovement = true;
+				mouseX = Mouse.getX();
+				mouseY = Math.abs(gc.getHeight() - Mouse.getY());
 			}
-			
-			if(hero1posY < enemy1posY){
-				hero1posY +=1;
-			}else if(hero1posY > enemy1posY){
-				hero1posY -=1;
-			}else{
-				hero1Yrange = true;
+			if(heroX < mouseX - 30){
+				heroX++;
+			}if(heroX > mouseX - 30){
+				heroX--;
+			}if(heroY < mouseY - 30){
+				heroY++;
+			}if(heroY > mouseY - 30){
+				heroY--;
 			}
 		}
+	}
 		
 		/*
-		if(hero1posX >= enemy1posX - 100 && hero1posX <= enemy1posX + 50 && hero1posY >= enemy1posY - 50 && hero1posY <= enemy1posY + 50 && Stan.hp() >= 0){
+		if(heroSpawnX >= enemy1posX - 100 && heroSpawnX <= enemy1posX + 50 && heroSpawnY >= enemy1posY - 50 && heroSpawnY <= enemy1posY + 50 && Stan.hp() >= 0){
 		}
 		*/
-	}
+	
 	
 	public int getID(){
 		return 1;
