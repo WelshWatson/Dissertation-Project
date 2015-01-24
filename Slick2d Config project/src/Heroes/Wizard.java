@@ -3,7 +3,8 @@ package Heroes;
 public class Wizard extends Allies{	
 		public Wizard(){
 		
-		atk = 5;
+		atkDamage = 5;
+		atkRange = 30;
 		def = 3;
 		hp = 15;
 		posX = 200;
@@ -12,7 +13,7 @@ public class Wizard extends Allies{
 		}
 		
 		public int attack(){
-			return atk;
+			return atkDamage;
 		}
 
 		public int defense() {

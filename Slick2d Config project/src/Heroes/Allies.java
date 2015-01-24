@@ -2,7 +2,8 @@ package Heroes;
 
 public abstract class Allies {
 
-		public int atk;
+		public int atkDamage;
+		public int atkRange;
 		public int def;
 		public int hp;
 		public float posX;

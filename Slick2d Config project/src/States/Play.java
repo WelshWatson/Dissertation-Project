@@ -22,9 +22,9 @@ public class Play extends BasicGameState {
 	boolean setMovement = false;
 	
 	int wolvesCreated = 0;
-	int heroesCreated = 0;
-	ArrayList<Wolf> etd = new ArrayList<Wolf>();
-	ArrayList<Wizard> wiz = new ArrayList<Wizard>();
+	int alliesCreated = 0;
+	ArrayList<Wolf> wolfArray = new ArrayList<Wolf>();
+	ArrayList<Wizard> wizardArray = new ArrayList<Wizard>();
 	
 	Timer t = new Timer();
 	float st = t.getTime();
@@ -113,13 +113,7 @@ public class Play extends BasicGameState {
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		
-		//Sleep timer to slow FPS to 60
-		
-		try {
-				Thread.sleep(14);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
 
 		//Draw grass
 		for(int y = 0; y < 16; y++){
@@ -159,34 +153,34 @@ public class Play extends BasicGameState {
 
 		Timer.tick();
 		float elapsed = t.getTime() - st;
-		if(elapsed % 5 >= 0 && elapsed % 5 < 1){
+		if(elapsed % 30 >= 0 && elapsed % 30 < 1){
 
 	    		Wolf wolf = new Wolf();
-	    		etd.add(wolf);
+	    		wolfArray.add(wolf);
 	    		wolvesCreated++;
-			st--;
+	    		st--;
 		}
 		if(wolvesCreated > 0){
-			for(int i = 0; i < etd.size(); i++){
-				Enemy1.draw(etd.get(i).posX, etd.get(i).posY, tileWidth, tileHeight);
+			for(int i = 0; i < wolfArray.size(); i++){
+				Enemy1.draw(wolfArray.get(i).posX, wolfArray.get(i).posY, tileWidth, tileHeight);
+				g.drawRect(wolfArray.get(i).posX - 32, wolfArray.get(i).posY - 20, tileWidth * 2, tileHeight * 2);
 		}
 		}
 		
 		g.drawString(enemy1posX + " - " + enemy1posY, 600, 50);
 		Hero1.draw(heroX, heroY, tileWidth, tileHeight);
+		g.drawRect(heroX - 32, heroY - 32, tileWidth * 2, tileHeight * 2);
 		
-		
-		if(elapsed % 5 >= 0 && elapsed % 5 < 1 && heroesCreated < 12){
+		if(elapsed % 5 >= 0 && elapsed % 5 < 1 && alliesCreated < 12){
     		Wizard wizard = new Wizard();
-    		wiz.add(wizard);
-    		heroesCreated++;
+    		wizardArray.add(wizard);
+    		alliesCreated++;
     		st--;
 		}
 		
-		if(heroesCreated > 0){
-			for(int i = 0; i < wiz.size(); i++){
-				Hero1.draw(wiz.get(i).posX, wiz.get(i).posY,tileWidth -20, tileHeight - 20);
-				System.out.println(wiz.size());
+		if(alliesCreated > 0){
+			for(int i = 0; i < wizardArray.size(); i++){
+				Hero1.draw(wizardArray.get(i).posX, wizardArray.get(i).posY,tileWidth -30, tileHeight - 20);
 		}	
 		}
 		UI.draw(0, 0, 1024, 768);
@@ -194,27 +188,52 @@ public class Play extends BasicGameState {
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
 
-		for(int i = 0; i < wiz.size(); i++){
-
-			if(wiz.get(i).posX < (heroX - 20) - (i * 10)){
-			wiz.get(i).posX++;
-			}if(wiz.get(i).posX > (heroX + 20) + (i * 10)){
-			wiz.get(i).posX--;
-			}	
-			
-			if(wiz.get(i).posY < (heroY - 30) - (i * 10)){
-				wiz.get(i).posY++;
-			}if(wiz.get(i).posY > (heroY + 50) + (i * 10)){
-			wiz.get(i).posY--;
+		//Sleep timer to slow FPS to 60
+		
+		try {
+				Thread.sleep(14);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		
+		//Make minions follow hero
+		for(int i = 0; i < wizardArray.size(); i++){
+			if(wizardArray.get(i).posX < (heroX - 20) - (i * 10)){
+			wizardArray.get(i).posX++;
+			}if(wizardArray.get(i).posX > (heroX + 40) + (i * 10)){
+			wizardArray.get(i).posX--;
+			}if(wizardArray.get(i).posY < (heroY - 30) - (i * 10)){
+			wizardArray.get(i).posY++;
+			}if(wizardArray.get(i).posY > (heroY + 50) + (i * 10)){
+			wizardArray.get(i).posY--;
 				}
+		
+		
+		//Hero to enemy proximity attack
+		for(int j = 0; j < wolfArray.size(); j++){
+		if(heroX + 96 > wolfArray.get(j).posX - 32 && heroX - 32 < wolfArray.get(j).posX + 96
+				&& heroY + 96 > wolfArray.get(j).posY - 20 && heroY - 32 < wolfArray.get(j).posY + 96){
+			
+				if(wizardArray.get(i).posX < wolfArray.get(j).posX - 20){
+				wizardArray.get(i).posX++;
+				}if(wizardArray.get(i).posX > wolfArray.get(j).posX - 20){
+				wizardArray.get(i).posX--;
+				}if(wizardArray.get(i).posY < wolfArray.get(j).posY - 20 + (i * 10)){
+				wizardArray.get(i).posY++;
+				}if(wizardArray.get(i).posY > wolfArray.get(j).posY - 20 - (i * 10)){
+				wizardArray.get(i).posY--;
+				}
+			}
+		}
+		
 		}
 		
 		float elapsed = t.getTime() - st;
 			
 		//Move enemy
 		if(elapsed % 2 >= 0 && elapsed % 2 < 1){
-			for(int i = 0; i < etd.size(); i++){
-			if(etd.get(i).posX < 974 && etd.get(i).posX > 20 && etd.get(i).posY > 100 && etd.get(i).posY < 600
+			for(int i = 0; i < wolfArray.size(); i++){
+			if(wolfArray.get(i).posX < 974 && wolfArray.get(i).posX > 20 && wolfArray.get(i).posY > 100 && wolfArray.get(i).posY < 600
 					&& hero1Yrange != true && hero1Xrange != true){
 					//Move
 									}
@@ -222,8 +241,6 @@ public class Play extends BasicGameState {
 		}
 
 		//Move hero
-		
-
 		if(elapsed > 2){
 			if(Mouse.isButtonDown(0)){
 				setMovement = true;
@@ -234,16 +251,17 @@ public class Play extends BasicGameState {
 				heroX++;
 			}if(heroX > mouseX - 30){
 				heroX--;
-			}if(heroY < mouseY - 30){
+			}if(heroY < mouseY - 50){
 				heroY++;
-			}if(heroY > mouseY - 30){
+			}if(heroY > mouseY - 50){
 				heroY--;
 			}
 		}
 	}
 		
 		/*
-		if(heroSpawnX >= enemy1posX - 100 && heroSpawnX <= enemy1posX + 50 && heroSpawnY >= enemy1posY - 50 && heroSpawnY <= enemy1posY + 50 && Stan.hp() >= 0){
+		if(heroSpawnX >= enemy1posX - 100 && heroSpawnX <= enemy1posX + 50 && heroSpawnY >= enemy1posY - 50
+		 && heroSpawnY <= enemy1posY + 50 && Stan.hp() >= 0){
 		}
 		*/
 	
