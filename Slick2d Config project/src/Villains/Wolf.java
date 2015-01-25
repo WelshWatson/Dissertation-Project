@@ -8,7 +8,8 @@ public class Wolf extends Mobs{
 	
 		public Wolf(){
 		
-		atk = 1;
+		atkDamage = 1;
+		atkRange = 10;
 		def = 3;
 		hp = 20;
 		posX = r.getX();
@@ -17,7 +18,7 @@ public class Wolf extends Mobs{
 		}
 		
 		public int attack(){
-			return atk;
+			return atkDamage;
 		}
 
 		public int defense() {

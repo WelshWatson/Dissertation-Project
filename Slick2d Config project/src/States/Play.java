@@ -199,33 +199,47 @@ public class Play extends BasicGameState {
 		//Make minions follow hero
 		for(int i = 0; i < wizardArray.size(); i++){
 			if(wizardArray.get(i).posX < (heroX - 20) - (i * 10)){
-			wizardArray.get(i).posX++;
+			wizardArray.get(i).posX += 0.5;
 			}if(wizardArray.get(i).posX > (heroX + 40) + (i * 10)){
-			wizardArray.get(i).posX--;
+			wizardArray.get(i).posX -= 0.5;
 			}if(wizardArray.get(i).posY < (heroY - 30) - (i * 10)){
-			wizardArray.get(i).posY++;
+			wizardArray.get(i).posY += 0.5;
 			}if(wizardArray.get(i).posY > (heroY + 50) + (i * 10)){
-			wizardArray.get(i).posY--;
+			wizardArray.get(i).posY -= 0.5;
 				}
 		
 		
-		//Hero to enemy proximity attack
+		//Allies to enemy proximity attack
 		for(int j = 0; j < wolfArray.size(); j++){
 		if(heroX + 96 > wolfArray.get(j).posX - 32 && heroX - 32 < wolfArray.get(j).posX + 96
 				&& heroY + 96 > wolfArray.get(j).posY - 20 && heroY - 32 < wolfArray.get(j).posY + 96){
 			
-				if(wizardArray.get(i).posX < wolfArray.get(j).posX - 20){
+				if(wizardArray.get(i).posX < wolfArray.get(j).posX - wizardArray.get(i).atkRange){
 				wizardArray.get(i).posX++;
-				}if(wizardArray.get(i).posX > wolfArray.get(j).posX - 20){
+				}if(wizardArray.get(i).posX > wolfArray.get(j).posX + wizardArray.get(i).atkRange){
 				wizardArray.get(i).posX--;
-				}if(wizardArray.get(i).posY < wolfArray.get(j).posY - 20 + (i * 10)){
+				}if(wizardArray.get(i).posY < wolfArray.get(j).posY - wizardArray.get(i).atkRange + (5 * i)){
 				wizardArray.get(i).posY++;
-				}if(wizardArray.get(i).posY > wolfArray.get(j).posY - 20 - (i * 10)){
+				}if(wizardArray.get(i).posY > wolfArray.get(j).posY + wizardArray.get(i).atkRange){
 				wizardArray.get(i).posY--;
 				}
 			}
+		
+		//Attacks
+		if(wolfArray.get(j).posX - wizardArray.get(i).posX < wizardArray.get(i).atkRange){
+			if(wolfArray.get(j).posY - wizardArray.get(i).posY < wizardArray.get(i).atkRange){
+			System.out.println("Wizard Attack!!");
+			}
 		}
 		
+		if(wolfArray.get(j).posX - wizardArray.get(i).posX < wolfArray.get(j).atkRange){
+			if(wolfArray.get(j).posY - wizardArray.get(i).posY < wolfArray.get(j).atkRange){
+				System.out.println("Wolf attack!!");
+			}
+			
+		}
+		
+		}
 		}
 		
 		float elapsed = t.getTime() - st;

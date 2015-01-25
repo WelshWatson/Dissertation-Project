@@ -4,7 +4,7 @@ public class Wizard extends Allies{
 		public Wizard(){
 		
 		atkDamage = 5;
-		atkRange = 30;
+		atkRange = 50;
 		def = 3;
 		hp = 15;
 		posX = 200;
