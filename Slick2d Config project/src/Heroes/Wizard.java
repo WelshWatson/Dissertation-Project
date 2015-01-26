@@ -1,7 +1,11 @@
 package Heroes;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 public class Wizard extends Allies{	
-		public Wizard(){
+	
+		public Wizard() throws SlickException{
 		
 		atkDamage = 5;
 		atkRange = 50;
@@ -9,7 +13,8 @@ public class Wizard extends Allies{
 		hp = 15;
 		posX = 155;
 		posY = 255;
-		
+		image = null;
+
 		}
 		
 		public int attack(int a){
@@ -34,4 +39,15 @@ public class Wizard extends Allies{
 			float y = posY;
 			return y;
 		}
+
+		public Image getImage() {
+			return this.image;
+		}
+
+		@Override
+		public void setImage(Image a) {
+			this.image = a;
+		}
+		
+		
 }
