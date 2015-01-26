@@ -7,13 +7,14 @@ public class Wizard extends Allies{
 		atkRange = 50;
 		def = 3;
 		hp = 15;
-		posX = 200;
-		posY = 240;
+		posX = 155;
+		posY = 255;
 		
 		}
 		
-		public int attack(){
-			return atkDamage;
+		public int attack(int a){
+			a = a - atkDamage;
+			return a;
 		}
 
 		public int defense() {
@@ -32,16 +33,5 @@ public class Wizard extends Allies{
 		public float coordY(){
 			float y = posY;
 			return y;
-		}
-		
-		public float[] createAlly(){
-    		float[] enemy = new float[6];
-			enemy[0] = attack();
-			enemy[1] = defense();
-			enemy[2] = hp();
-			enemy[4] = coordX();
-			enemy[5] = coordY();
-			return enemy;
-			
 		}
 }
