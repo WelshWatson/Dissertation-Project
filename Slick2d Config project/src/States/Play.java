@@ -38,9 +38,13 @@ public class Play extends BasicGameState {
 	Image UI = null;
 	Image castle = null;
 	Image grass = null;
-	Image allyWizardFacingRight = null;
-	Image[] wizardRight = new Image[5];
-	Image[] knightRight = new Image[5];
+	Image allyWizard = null;
+	
+	Image[] wizardRight = new Image[7];
+	Image[] wizardLeft = new Image[7];
+	
+	Image[] knightRight = new Image[7];
+	Image[] knightLeft = new Image[7];
 	
 	boolean Enemy1Alive = true;
 	boolean hero1Xrange = false;
@@ -50,16 +54,14 @@ public class Play extends BasicGameState {
 	boolean knightMoveRight = false;
 	boolean gameStart = false;
 	
-	int heroX = 155;
-	int heroY = 255;
+	int heroX = 100;
+	int heroY = 120;
 	float enemy1posX;
 	float enemy1posY;
 
 	int tileWidth = 64;
 	int tileHeight = 64;
 	
-	    	//int[][][][][] enemy = new int[Stan.attack()][Stan.defense()][Stan.hp()][Stan.coordX()][Stan.coordY()];
-
 	public Play(int State){
 	}
 	
@@ -67,22 +69,43 @@ public class Play extends BasicGameState {
 
 		castle = new Image("res/newCastle.png");
 		grass = new Image("res/GrassPic.png");
-		heroFacingRight = new Image("res/knight/knightStanding.png");
-		allyWizardFacingRight = new Image("res/wizard/wizardStanding.png");
+		heroFacingRight = new Image("res/knight/Right0.png");
+		allyWizard = new Image("res/wizard/Right0.png");
 		Enemy1 = new Image("res/Enemy1.png");
 		UI = new Image("res/UI.png");
 				
-		wizardRight[0] = new Image("res/wizard/wizardStanding.png");
-		wizardRight[1] = new Image("res/wizard/Wizard 1.png");
-		wizardRight[2] = new Image("res/wizard/Wizard 2.png");
-		wizardRight[3] = new Image("res/wizard/Wizard 3.png");
-		wizardRight[4] = new Image("res/wizard/Wizard 4.png");
+		wizardRight[0] = new Image("res/wizard/Right0.png");
+		wizardRight[1] = new Image("res/wizard/Right1.png");
+		wizardRight[2] = new Image("res/wizard/Right2.png");
+		wizardRight[3] = new Image("res/wizard/Right3.png");
+		wizardRight[4] = new Image("res/wizard/Right4.png");
+		wizardRight[5] = new Image("res/wizard/Right5.png");
+		wizardRight[6] = new Image("res/wizard/Right6.png");
 		
-		knightRight[0] = new Image("res/knight/knightStanding.png");
-		knightRight[1] = new Image("res/knight/right 1.png");
-		knightRight[2] = new Image("res/knight/right 2.png");
-		knightRight[3] = new Image("res/knight/right 3.png");
-		knightRight[4] = new Image("res/knight/right 4.png");
+		wizardLeft[0] = new Image("res/wizard/Left0.png");
+		wizardLeft[1] = new Image("res/wizard/Left1.png");
+		wizardLeft[2] = new Image("res/wizard/Left2.png");
+		wizardLeft[3] = new Image("res/wizard/Left3.png");
+		wizardLeft[4] = new Image("res/wizard/Left4.png");
+		wizardLeft[5] = new Image("res/wizard/Left5.png");
+		wizardLeft[6] = new Image("res/wizard/Left6.png");
+
+		knightRight[0] = new Image("res/knight/Right0.png");
+		knightRight[1] = new Image("res/knight/Right1.png");
+		knightRight[2] = new Image("res/knight/Right2.png");
+		knightRight[3] = new Image("res/knight/Right3.png");
+		knightRight[4] = new Image("res/knight/Right4.png");
+		knightRight[5] = new Image("res/knight/Right5.png");
+		knightRight[6] = new Image("res/knight/Right6.png");
+		
+		knightLeft[0] = new Image("res/knight/Left0.png");
+		knightLeft[1] = new Image("res/knight/Left1.png");
+		knightLeft[2] = new Image("res/knight/Left2.png");
+		knightLeft[3] = new Image("res/knight/Left3.png");
+		knightLeft[4] = new Image("res/knight/Left4.png");
+		knightLeft[5] = new Image("res/knight/Left5.png");
+		knightLeft[6] = new Image("res/knight/Left6.png");
+
 
 	}
 
@@ -153,7 +176,7 @@ public class Play extends BasicGameState {
 		//Draw wizards
 		if(alliesCreated > 0){
 			for(int i = 0; i < wizardArray.size(); i++){
-				allyWizardFacingRight.draw(wizardArray.get(i).posX, wizardArray.get(i).posY,tileWidth -30, tileHeight - 20);
+				allyWizard.draw(wizardArray.get(i).posX, wizardArray.get(i).posY,tileWidth -30, tileHeight - 20);
 		}	
 		}
 		UI.draw(0, 0, 1024, 768);
@@ -179,17 +202,28 @@ public class Play extends BasicGameState {
 			if(wizardArray.get(i).posX < (heroX - 20) - (i * 10)){
 			wizardArray.get(i).posX += 0.5;
 			switch(allyMovementCounter){
-			case 0:  allyWizardFacingRight = wizardRight[0];
-			case 10:  allyWizardFacingRight = wizardRight[1]; break;
-			case 20:  allyWizardFacingRight = wizardRight[2]; break;
-			case 30:  allyWizardFacingRight = wizardRight[3]; break;
-			case 40:  allyWizardFacingRight = wizardRight[4];
-						allyMovementCounter = 0; 
-						break;
+			case 0:  allyWizard = wizardRight[0];
+			case 10:  allyWizard = wizardRight[1]; break;
+			case 20:  allyWizard = wizardRight[2]; break;
+			case 30:  allyWizard = wizardRight[3]; break;
+			case 40:  allyWizard = wizardRight[4]; break;
+			case 50:  allyWizard = wizardRight[5]; break;
+			case 60:  allyWizard = wizardRight[6];
+					  allyMovementCounter = 0;     break;
 			};
 			allyMovementCounter++;
 			}if(wizardArray.get(i).posX > (heroX + 40) + (i * 10)){
 			wizardArray.get(i).posX -= 0.5;
+			switch(allyMovementCounter){
+			case 0:  allyWizard = wizardLeft[0];
+			case 10:  allyWizard = wizardLeft[1]; break;
+			case 20:  allyWizard = wizardLeft[2]; break;
+			case 30:  allyWizard = wizardLeft[3]; break;
+			case 40:  allyWizard = wizardLeft[4]; break;
+			case 50:  allyWizard = wizardLeft[5]; break;
+			case 60:  allyWizard = wizardLeft[6];
+					  allyMovementCounter = 0; 	  break;
+			};
 			}if(wizardArray.get(i).posY < (heroY - 30) - (i * 10)){
 			wizardArray.get(i).posY += 0.5;
 			}if(wizardArray.get(i).posY > (heroY + 50) + (i * 10)){
@@ -204,11 +238,11 @@ public class Play extends BasicGameState {
 				if(wizardArray.get(i).posX < wolfArray.get(j).posX - wizardArray.get(i).atkRange + 5){
 				wizardArray.get(i).posX++;
 				switch(allyMovementCounter){
-				case 0:  allyWizardFacingRight = wizardRight[0];
-				case 10:  allyWizardFacingRight = wizardRight[1]; break;
-				case 20:  allyWizardFacingRight = wizardRight[2]; break;
-				case 30:  allyWizardFacingRight = wizardRight[3]; break;
-				case 40:  allyWizardFacingRight = wizardRight[4];
+				case 0:  allyWizard = wizardRight[0];
+				case 10:  allyWizard = wizardRight[1]; break;
+				case 20:  allyWizard = wizardRight[2]; break;
+				case 30:  allyWizard = wizardRight[3]; break;
+				case 40:  allyWizard = wizardRight[4];
 							allyMovementCounter = 0; 
 							break;
 				};
@@ -268,7 +302,9 @@ public class Play extends BasicGameState {
 						case 10:  heroFacingRight = knightRight[1]; break;
 						case 20:  heroFacingRight = knightRight[2]; break;
 						case 30:  heroFacingRight = knightRight[3]; break;
-						case 40:  heroFacingRight = knightRight[4];
+						case 40:  heroFacingRight = knightRight[4]; break;
+						case 50:  heroFacingRight = knightRight[5]; break;
+						case 60:  heroFacingRight = knightRight[6];
 									heroMovementCounter = 0; 
 									break;
 						};
