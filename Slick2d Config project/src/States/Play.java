@@ -153,7 +153,7 @@ public class Play extends BasicGameState {
 		
 		
 		//Add wizard every 5 seconds
-		if(elapsed % 7 >= 0 && elapsed % 7 < 1 && alliesCreated < 1){
+		if(elapsed % 10 >= 0 && elapsed % 12 < 1 && alliesCreated < 5){
 			System.out.println("add wizard");
     		Wizard wizard = new Wizard();
     		wizard.setImage(wizardDown);
@@ -163,7 +163,7 @@ public class Play extends BasicGameState {
 		}
 		
 		//Add knight every 5 seconds
-		if(elapsed % 10 >= 0 && elapsed % 10 < 1 && alliesCreated < 5){
+		if(elapsed % 7 >= 0 && elapsed % 7 < 1 && alliesCreated < 5){
 			System.out.println("add wizard");
     		Knight knight = new Knight();
     		knight.setImage(knightDown);
@@ -200,6 +200,7 @@ public class Play extends BasicGameState {
 		float distance = 0;
 		float nearest = 0;
 
+		/*
 		if(wolvesCreated > 0){
 		if(wizardArray.get(0).coordX() < wolfArray.get(0).coordX()){
 			nearest += wolfArray.get(0).coordX() - wizardArray.get(0).coordX();
@@ -236,6 +237,7 @@ public class Play extends BasicGameState {
 				}
 							}
 		}
+		*/
 		System.out.println(distance);
 		if(gameStart == true){
 			
@@ -274,16 +276,16 @@ public class Play extends BasicGameState {
 		}
 		
 		if(knightArray.get(i).posX < (heroX - 20) - (i * 10)){
-			knightArray.get(i).posX += 0.5;
+			knightArray.get(i).posX += 0.8;
 						
 			}if(knightArray.get(i).posX > (heroX + 40) + (i * 10)){
-				knightArray.get(i).posX -= 0.5;
+				knightArray.get(i).posX -= 0.8;
 			
 			}if(knightArray.get(i).posY < (heroY - 30) - (i * 10)){
-				knightArray.get(i).posY += 0.5;
+				knightArray.get(i).posY += 0.8;
 			
 			}if(knightArray.get(i).posY > (heroY + 50) + (i * 10)){
-				knightArray.get(i).posY -= 0.5;
+				knightArray.get(i).posY -= 0.8;
 				}
 		}
 		}
@@ -325,48 +327,37 @@ public class Play extends BasicGameState {
 			wizardArray.get(i).posY -= 0.5;
 				}
 			
-
+			
 		
 		
 		//Allies to enemy proximity attack
 			
+			//Hero proximity
 		for(int j = 0; j < wolfArray.size(); j++){
 		if(heroX + 96 > wolfArray.get(j).posX - 32 && heroX - 32 < wolfArray.get(j).posX + 96
 				&& heroY + 96 > wolfArray.get(j).posY - 20 && heroY - 32 < wolfArray.get(j).posY + 96){
-			System.out.println("Hero Proximity!");
-			allyAttack = true;
 			
 			
 			
 			 
 				if(wizardArray.get(i).posX < wolfArray.get(j).posX - wizardArray.get(i).atkRange + 5){
-					System.out.println("Wizard Proximity!");
 				wizardArray.get(i).posX++;
 				wizardArray.get(i).setImage(wizardRight);
-				allyAttack = true;
 				
 				}if(wizardArray.get(i).posX > wolfArray.get(j).posX + wizardArray.get(i).atkRange - 5){
-					System.out.println("Wizard Proximity!");
 				wizardArray.get(i).posX--;
 				wizardArray.get(i).setImage(wizardLeft);
-				allyAttack = true;
 
 				}if(wizardArray.get(i).posY < wolfArray.get(j).posY - wizardArray.get(i).atkRange + (5 * i)){
-					System.out.println("Wizard Proximity!");
 				wizardArray.get(i).posY++;
 				wizardArray.get(i).setImage(wizardUp);
-				allyAttack = true;
 
 				}if(wizardArray.get(i).posY > wolfArray.get(j).posY + wizardArray.get(i).atkRange){
-					System.out.println("Wizard Proximity!");
 				wizardArray.get(i).posY--;
 				wizardArray.get(i).setImage(wizardDown);
-				allyAttack = true;
 
 				}
 			
-			}else{
-				allyAttack = false;
 			}
 		
 		//Target nearest enemy
