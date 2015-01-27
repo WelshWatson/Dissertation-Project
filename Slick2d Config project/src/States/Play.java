@@ -238,7 +238,6 @@ public class Play extends BasicGameState {
 							}
 		}
 		*/
-		System.out.println(distance);
 		if(gameStart == true){
 			
 		
@@ -374,7 +373,7 @@ public class Play extends BasicGameState {
 		}
 		}
 		
-		
+		}
 			
 		//Move enemy
 		if(elapsed % 2 >= 0 && elapsed % 2 < 1){
@@ -389,7 +388,6 @@ public class Play extends BasicGameState {
 		
 		
 		//Move hero
-		if(elapsed > 3){
 			if(Mouse.isButtonDown(0)){
 				setMovement = true;
 				mouseX = Mouse.getX();
@@ -405,9 +403,7 @@ public class Play extends BasicGameState {
 				heroY--;
 			}
 		}
-
-		}
-		}
+		
 		
 	
 		
