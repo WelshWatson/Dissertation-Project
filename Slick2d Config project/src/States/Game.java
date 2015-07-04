@@ -4,7 +4,7 @@ import org.newdawn.slick.state.*;
 
 public class Game extends StateBasedGame{
 
-	public static final String gamename = "Raid Manager";//Game name
+	public static final String gamename = "Man-Up";//Game name
 	public static final int screenWidth = 1024;
 	public static final int screenHeight = 768;
 	

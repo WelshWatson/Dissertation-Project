@@ -51,6 +51,8 @@ public class Play extends BasicGameState {
 	Image knightLeft = null;
 	Image knightUp = null;
 	Image knightDown = null;
+	
+	Image instructions = null;
 
 	boolean Enemy1Alive = true;
 	boolean hero1Xrange = false;
@@ -76,7 +78,7 @@ public class Play extends BasicGameState {
 
 		castle = new Image("res/newCastle.png");
 		grass = new Image("res/GrassPic.png");
-		heroFacingRight = new Image("res/knight/Right.png");
+		heroFacingRight = new Image("res/HeroImage.png");
 		Enemy1 = new Image("res/Enemy1.png");
 		UI = new Image("res/UI.png");
 
@@ -91,13 +93,15 @@ public class Play extends BasicGameState {
 		knightLeft = new Image("res/knight/Left.png");
 		knightUp = new Image("res/knight/Up.png");
 		knightDown = new Image("res/knight/Down.png");
+		
+		instructions = new Image("res/Instructions.png");
 
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 
 		if(gameStart == false){
-			g.drawString("Instructions will go here, but for now...", 330, 280);
+			g.drawImage(instructions, 0, 0);
 		g.drawString("Press the spacebar to begin!", 350, 300);
 		
 		Input Input = gc.getInput();
@@ -153,7 +157,7 @@ public class Play extends BasicGameState {
 		
 		
 		//Add wizard every 5 seconds
-		if(elapsed % 10 >= 0 && elapsed % 12 < 1 && alliesCreated < 5){
+		if(elapsed % 10 >= 0 && elapsed % 12 < 1 && alliesCreated < 2){
 			System.out.println("add wizard");
     		Wizard wizard = new Wizard();
     		wizard.setImage(wizardDown);
@@ -163,7 +167,7 @@ public class Play extends BasicGameState {
 		}
 		
 		//Add knight every 5 seconds
-		if(elapsed % 7 >= 0 && elapsed % 7 < 1 && alliesCreated < 5){
+		if(elapsed % 7 >= 0 && elapsed % 7 < 1 && alliesCreated < 1){
 			System.out.println("add wizard");
     		Knight knight = new Knight();
     		knight.setImage(knightDown);
